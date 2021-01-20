@@ -5,15 +5,6 @@ import (
 	"github.com/Ferza17/Microservices_GRPC_SERVER_Go-Users-API/protos/user_proto"
 )
 
-func DataToFullUserPB(data *user_domain.User) *user_proto.FullUserData {
-
-	return &user_proto.FullUserData{
-		User:     DataToUser(data),
-		Watched:  DataToWatched(data.Watched),
-		Wishlist: DataToWishlist(data.Wishlist),
-	}
-}
-
 func DataToUser(data *user_domain.User) *user_proto.User {
 	return &user_proto.User{
 		Id:       data.Id,
@@ -23,10 +14,12 @@ func DataToUser(data *user_domain.User) *user_proto.User {
 		Loyalty:  data.Loyalty,
 		Payment:  data.Payment,
 		Password: data.Password,
+		Watched:  DataToProtoWatched(data.Watched),
+		Wishlist: DataToProtoWishlist(data.Wishlist),
 	}
 }
 
-func DataToWishlist(data []*user_domain.Wishlist) []*user_proto.Wishlist {
+func DataToProtoWishlist(data []*user_domain.Wishlist) []*user_proto.Wishlist {
 	var result []*user_proto.Wishlist
 	for _, data := range data {
 		result = append(result, &user_proto.Wishlist{
@@ -38,7 +31,7 @@ func DataToWishlist(data []*user_domain.Wishlist) []*user_proto.Wishlist {
 	return result
 }
 
-func DataToWatched(data []*user_domain.Watched) []*user_proto.Watched {
+func DataToProtoWatched(data []*user_domain.Watched) []*user_proto.Watched {
 	var result []*user_proto.Watched
 	for _, data := range data {
 		result = append(result, &user_proto.Watched{
@@ -48,6 +41,31 @@ func DataToWatched(data []*user_domain.Watched) []*user_proto.Watched {
 			Rate:      data.Rate,
 		})
 	}
-
 	return result
+}
+
+func DataToDomainWishlist(data []*user_proto.Wishlist) []*user_domain.Wishlist {
+	var wishlist []*user_domain.Wishlist
+	for _, item := range data {
+		wishlist = append(wishlist, &user_domain.Wishlist{
+			IdUser:     item.IdUser,
+			IdMovie:    item.IdMovie,
+			IdWishlist: item.IdWishlist,
+		})
+	}
+	return wishlist
+}
+
+func DataToDomainWatched(data []*user_proto.Watched) []*user_domain.Watched {
+	var watched []*user_domain.Watched
+	for _, item := range data {
+		watched = append(watched, &user_domain.Watched{
+			IdWatched: item.IdWatched,
+			IdMovie:   item.IdMovie,
+			IdUser:    item.IdUser,
+			Rate:      item.Rate,
+		})
+	}
+
+	return watched
 }

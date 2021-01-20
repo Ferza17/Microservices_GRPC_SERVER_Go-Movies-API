@@ -13,5 +13,8 @@ type Value struct {
 }
 
 type QueryBuilder struct {
-	Query *query
+	Query       *query
+	totalValues int
+	// Table will be []string if use join methods
+	table       string
 }

@@ -25,22 +25,58 @@ message User {
   string phone = 5;
   float payment = 6;
   int32 loyalty = 7;
+  repeated Watched watched = 8;
+  repeated Wishlist wishlist = 9;
 }
 
-message FullUserData {
-  User user = 1;
-  repeated Watched watched = 2;
-  repeated Wishlist wishlist = 3;
-}
+
+// Create User
 
 message CreateUserRequest{
   User user = 1;
 }
 
 message CreateUserResponse{
-  FullUserData user = 1;
+  User user = 1;
 }
 
+// End Create User
+
+// Get By ID
+
+message GetUserByIdRequest{
+  int64 id_user = 1;
+}
+
+message GetUserByIdResponse {
+  User user = 1;
+}
+
+// END Get By ID
+
+
+// UPDATE USER
+
+message UpdateUserRequest{
+  User user = 1;
+}
+
+message UpdateUserResponse{
+  User user = 1;
+}
+
+// END Update User
+
+
+
 service UserService {
+  // Create User, Dont assign ID because generate automatically by system
   rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+
+  //Get User By ID
+  rpc GetUserById(GetUserByIdRequest) returns (GetUserByIdResponse){}
+
+  // Update User
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+
 }
