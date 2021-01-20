@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package protos;
+
+option go_package = "protos/user_proto";
+
+message Watched {
+  int64 id_watched = 1;
+  string id_movie = 2;
+  int64 id_user = 4;
+  float rate = 3;
+}
+
+message Wishlist {
+  int64 id_wishlist = 1;
+  string id_movie = 2;
+  int64 id_user = 3;
+}
+
+message User {
+  int64 id = 1;
+  string  name = 2;
+  string  email = 3;
+  string  password = 4;
+  string phone = 5;
+  float payment = 6;
+  int32 loyalty = 7;
+}
+
+message FullUserData {
+  User user = 1;
+  repeated Watched watched = 2;
+  repeated Wishlist wishlist = 3;
+}
+
+message CreateUserRequest{
+  User user = 1;
+}
+
+message CreateUserResponse{
+  FullUserData user = 1;
+}
+
+service UserService {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+}
