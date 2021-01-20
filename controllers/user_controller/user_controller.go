@@ -25,7 +25,7 @@ func (s *Server) CreateUser(ctx context.Context, request *user_proto.CreateUserR
 		logger_utils.Error("Error while trying to service create user", err)
 	}
 
-	//TODO u can use OpenID if u want to secure data. in case i dont use that
+	// u can use OpenID if u want to secure data. in case i dont use that
 
 	return &user_proto.CreateUserResponse{
 		User: user_utils.DataToUser(res),

@@ -132,3 +132,8 @@ func (u *User) Update() error {
 	return nil
 
 }
+
+// TODO : Update Loyalty
+func (u *User) UpdateLoyalty() error {
+	return nil
+}
