@@ -15,10 +15,12 @@ type Server struct {
 
 func (s *Server) CreateUser(ctx context.Context, request *user_proto.CreateUserRequest) (*user_proto.CreateUserResponse, error) {
 	res, err := user_services.Services.Create(user_domain.User{
-		Name:     request.GetUser().GetName(),
-		Password: crypt_utils.GetMd5(request.GetUser().GetPassword()),
-		Email:    request.GetUser().GetEmail(),
-		Phone:    request.GetUser().GetPhone(),
+		Name:     request.GetName(),
+		Password: crypt_utils.GetMd5(request.GetPassword()),
+		Email:    request.GetEmail(),
+		Phone:    request.GetPhone(),
+		Payment:  request.GetPayment(),
+		Loyalty:  request.GetLoyalty(),
 	})
 
 	if err != nil {
@@ -45,8 +47,6 @@ func (s *Server) GetUserById(ctx context.Context, request *user_proto.GetUserByI
 }
 
 func (s *Server) UpdateUser(ctx context.Context, request *user_proto.UpdateUserRequest) (*user_proto.UpdateUserResponse, error) {
-
-
 
 	UserUpdate := user_domain.User{
 		Id:       request.GetUser().GetId(),

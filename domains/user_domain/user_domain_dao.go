@@ -9,14 +9,13 @@ import (
 )
 
 func (u *User) Save() error {
-
 	builder := query_utils.NewQueryBuilder()
+
 	query := builder.
 		Insert("users").
-		Columns("Name", "Email", "Password", "Phone").
+		Columns(u).
 		Values().
-		Build()
-
+		BuildQuery()
 	stmt, err := mysql.Client.Prepare(query)
 	if err != nil {
 		logger_utils.Error("Error While Preparing query ", err)
@@ -24,7 +23,7 @@ func (u *User) Save() error {
 	}
 	defer stmt.Close()
 
-	insetResult, err := stmt.Exec(u.Name, u.Email, u.Password, u.Phone)
+	insetResult, err := stmt.Exec(builder.GetValueOfUser(u)...)
 	if err != nil {
 		logger_utils.Error("Error while trying to exec query ", err)
 		return errors_util.Internal("Error to save to database ")
@@ -44,11 +43,9 @@ func (u *User) GetUser() error {
 	builder := query_utils.NewQueryBuilder()
 	query := builder.
 		Select("users").
-		Columns().
+		Columns(nil).
 		Where("Id").
-		Build()
-
-	logger_utils.Info(query)
+		BuildQuery()
 
 	stmt, err := mysql.Client.Prepare(query)
 	if err != nil {
@@ -112,10 +109,9 @@ func (u *User) Update() error {
 	builder := query_utils.NewQueryBuilder()
 	query := builder.
 		Update("users").
-		Columns("Id", "Name", "Email", "Password", "Phone").
+		Columns(u).
 		Where("Id").
-		Build()
-	logger_utils.Info(query)
+		BuildQuery()
 
 	stmt, err := mysql.Client.Prepare(query)
 	if err != nil {
@@ -125,7 +121,7 @@ func (u *User) Update() error {
 
 	defer stmt.Close()
 
-	if _, err := stmt.Exec(u.Id, u.Name, u.Email, u.Password, u.Phone, u.Id); err != nil {
+	if _, err := stmt.Exec(builder.GetValueOfUser(u)...); err != nil {
 		logger_utils.Error("error when trying to execute user statement", err)
 		return errors_util.Internal("Database Error")
 	}
@@ -133,7 +129,28 @@ func (u *User) Update() error {
 
 }
 
-// TODO : Update Loyalty
-func (u *User) UpdateLoyalty() error {
+// TODO Add wishlist with id Film
+func (u *User) AddWishlist() error {
+	//...
 	return nil
 }
+
+// TODO Delete wishlist with id Film
+func (u *User) DeleteWishlist(idMovie string) error {
+	//...
+	return nil
+}
+
+// TODO get wishlist with id Film
+func (u *User) GetWishlist(idMovie string) error {
+	//...
+	return nil
+}
+
+// TODO get All Wishlist by id
+func (u *User) GetWishlists(idUser int) error {
+	//...
+	return nil
+}
+
+// WATCHED
