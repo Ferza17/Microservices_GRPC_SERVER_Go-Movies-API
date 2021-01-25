@@ -1,11 +1,11 @@
-package user_utils
+package user
 
 import (
-	"github.com/Ferza17/Microservices_GRPC_SERVER_Go-Users-API/domains/user_domain"
-	"github.com/Ferza17/Microservices_GRPC_SERVER_Go-Users-API/protos/user_proto"
+	"github.com/Ferza17/Microservices_GRPC_SERVER_Go-Users-API/domains/userDomain"
+	"github.com/Ferza17/Microservices_GRPC_SERVER_Go-Users-API/protos/server/user_proto"
 )
 
-func DataToUser(data *user_domain.User) *user_proto.User {
+func DataToUser(data *userDomain.User) *user_proto.User {
 	return &user_proto.User{
 		Id:       data.Id,
 		Name:     data.Name,
@@ -19,7 +19,7 @@ func DataToUser(data *user_domain.User) *user_proto.User {
 	}
 }
 
-func DataToProtoWishlist(data []*user_domain.Wishlist) []*user_proto.Wishlist {
+func DataToProtoWishlist(data []*userDomain.Wishlist) []*user_proto.Wishlist {
 	var result []*user_proto.Wishlist
 	for _, data := range data {
 		result = append(result, &user_proto.Wishlist{
@@ -31,7 +31,7 @@ func DataToProtoWishlist(data []*user_domain.Wishlist) []*user_proto.Wishlist {
 	return result
 }
 
-func DataToProtoWatched(data []*user_domain.Watched) []*user_proto.Watched {
+func DataToProtoWatched(data []*userDomain.Watched) []*user_proto.Watched {
 	var result []*user_proto.Watched
 	for _, data := range data {
 		result = append(result, &user_proto.Watched{
@@ -44,10 +44,10 @@ func DataToProtoWatched(data []*user_domain.Watched) []*user_proto.Watched {
 	return result
 }
 
-func DataToDomainWishlist(data []*user_proto.Wishlist) []*user_domain.Wishlist {
-	var wishlist []*user_domain.Wishlist
+func DataToDomainWishlist(data []*user_proto.Wishlist) []*userDomain.Wishlist {
+	var wishlist []*userDomain.Wishlist
 	for _, item := range data {
-		wishlist = append(wishlist, &user_domain.Wishlist{
+		wishlist = append(wishlist, &userDomain.Wishlist{
 			IdUser:     item.IdUser,
 			IdMovie:    item.IdMovie,
 			IdWishlist: item.IdWishlist,
@@ -56,10 +56,10 @@ func DataToDomainWishlist(data []*user_proto.Wishlist) []*user_domain.Wishlist {
 	return wishlist
 }
 
-func DataToDomainWatched(data []*user_proto.Watched) []*user_domain.Watched {
-	var watched []*user_domain.Watched
+func DataToDomainWatched(data []*user_proto.Watched) []*userDomain.Watched {
+	var watched []*userDomain.Watched
 	for _, item := range data {
-		watched = append(watched, &user_domain.Watched{
+		watched = append(watched, &userDomain.Watched{
 			IdWatched: item.IdWatched,
 			IdMovie:   item.IdMovie,
 			IdUser:    item.IdUser,

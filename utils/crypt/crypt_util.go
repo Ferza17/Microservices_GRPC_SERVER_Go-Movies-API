@@ -1,4 +1,4 @@
-package crypt_utils
+package crypt
 import (
 	"crypto/md5"
 	"encoding/hex"
