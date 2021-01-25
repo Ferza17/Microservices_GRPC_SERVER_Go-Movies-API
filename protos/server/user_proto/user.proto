@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package protos;
 
-option go_package = "protos/user_proto";
+option go_package = "protos/server/user_proto";
 
 
 service UserService {
@@ -44,7 +44,7 @@ message User {
 
 
 // Create User
-//TODO Update to name, email, password, phone, payment, loyalty
+//TODO Update with name, email, password, phone, payment, loyalty
 message CreateUserRequest{
   int64 id = 1;
   string  name = 2;
@@ -62,7 +62,7 @@ message CreateUserResponse{
 // End Create User
 
 // Get By ID
-
+//TODO: Request By ID of user
 message GetUserByIdRequest{
   int64 id_user = 1;
 }
@@ -70,12 +70,11 @@ message GetUserByIdRequest{
 message GetUserByIdResponse {
   User user = 1;
 }
-
 // END Get By ID
 
 
 // UPDATE USER
-
+//TODO: update with all key and value of user schema
 message UpdateUserRequest{
   User user = 1;
 }
@@ -83,7 +82,6 @@ message UpdateUserRequest{
 message UpdateUserResponse{
   User user = 1;
 }
-
 // END Update User
 
 

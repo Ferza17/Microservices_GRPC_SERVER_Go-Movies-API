@@ -1,4 +1,4 @@
-package user_domain
+package userDomain
 
 type Wishlist struct {
 	IdWishlist int64  `db:"Id_wishlist"`

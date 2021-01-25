@@ -1,4 +1,4 @@
-package query_utils
+package query
 
 import (
 	"fmt"
@@ -107,12 +107,10 @@ func (q *QueryBuilder) And() *QueryBuilder {
 	return q
 }
 
-func (q *QueryBuilder) GetValueOfUser(data interface{}) []interface{} {
+func (q *QueryBuilder) GetValueOf(data interface{}) []interface{} {
 	var result []interface{}
 	e := reflect.ValueOf(data).Elem()
 	for i := 0; i < e.NumField(); i++ {
-		//varName := e.Type().Field(i).Name
-		//varType := e.Type().Field(i).Type
 		varValue := e.Field(i).Interface()
 
 		switch varValue.(type) {
@@ -145,7 +143,6 @@ func GetColumn(cols interface{}) []string {
 	str := make([]string, e.NumField())
 	for i := 0; i < e.NumField(); i++ {
 		varName := e.Type().Field(i).Name
-		//varType := e.Type().Field(i).Type
 		varValue := e.Field(i).Interface()
 
 		// TODO: insert to slice if value not nil || not "" || not slice nil
